@@ -17,4 +17,7 @@
 
 const Route = use('Route')
 
-Route.on('/').render('welcome')
+// Route.on('/').render('welcome')
+Route.group('authentication', () => {
+  Route.post('/user', 'UserController.index')
+}).prefix('/auth')
