@@ -1,28 +1,25 @@
 'use strict'
-const Hash = use('Hash')
-class UserController {
-  static get inject () {
-    return ['App/Model/User']
-  }
+const UserOperation = use('App/Operations/UserOperation')
 
-  constructor (User) {
-    this.User = User
-  }
+class UserController {
 
   * index (request, response) {
     try {
       const data = request.all()
-      let user = yield this.User.query().where({email: data.email}).first()
-      let userHashPass = user.password
-      const verify = yield Hash.verify(data.password, userHashPass)
+      let op = new UserOperation()
+      op.email = data.email
+      op.password = data.password
 
-      if (verify) {
-        response.json(user)
+      const user = yield op.getUser()
+
+      if (user) {
+        let {token} = yield request.auth.generate(user)
+        response.json({token})
       } else {
-        response.unautorized('Invalid Credentaials')
+        response.status(op.getFirstError().code).json(op.getFirstError().message)
       }
     } catch (error) {
-      // response.status(404).json(error)
+      response.status(404).json(error.message)
     }
   }
 }
