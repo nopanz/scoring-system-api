@@ -18,6 +18,14 @@
 const Route = use('Route')
 
 Route.on('/').render('welcome')
-Route.group('authentication', () => {
-  Route.post('/user', 'UserController.index')
-}).prefix('/auth')
+// Aut token
+Route.post('/user/auth', 'UserController.index')
+Route.post('/judge', 'JudgeController.index')
+
+Route.group('authenticated', () => {
+  Route.get('/user', 'UserController.getUser')
+  Route.post('/pageant', 'PageantController.index')
+  Route.get('/pageant/:pageantId', 'PageantController.getPageant')
+  Route.get('/pageant', 'PageantController.getPageants')
+}).middleware('bearer')
+

@@ -28,6 +28,16 @@ class Operation {
     return {}
   }
 
+  setRules (rules, customRules) {
+    let handledRules = customRules[this.scenario]
+
+    if (rules) {
+      handledRules = Object.assign({}, rules, handledRules)
+    }
+
+    return handledRules
+  }
+
   /**
    *  Validate the properties
    * @returns {boolean}
@@ -35,7 +45,6 @@ class Operation {
   *validate (obj = null, rules = null) {
     let model = obj ? obj : this
     let validatorRules = rules ? rules : this.rules
-
     let validation = yield this.validator.validate(model, validatorRules, this.messages)
     if (validation.fails()) {
       this.errors = validation.messages().map(error => {
@@ -55,7 +64,7 @@ class Operation {
    * Get the error messages
    * @returns {Array}
    */
-  getFirstError () {
+  get error () {
     return this.errors[0]
   }
 }

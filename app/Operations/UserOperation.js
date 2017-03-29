@@ -1,28 +1,36 @@
+'use strict'
+
 const Operation = use('App/Operations/Operation')
 const User = use('App/Model/User')
 const Hash = use('Hash')
+
+const SCENARIO = {
+  DEFAULT: 'auth',
+  USER: 'get-user'
+}
 
 class UserOperation extends Operation {
   constructor (props) {
     super(props)
     this.email = null
     this.password = null
+    this.scenario = SCENARIO.DEFAULT
   }
 
   get rules () {
     return {
-      email: 'required|email',
-      password: 'required'
+      email: `required_when:scenario,${SCENARIO.DEFAULT}|email`,
+      password: `required_when:scenario,${SCENARIO.DEFAULT}`
     }
   }
 
   get messages () {
     return {
-      required: '{{field}} is required'
+      required_when: '{{field}} is required'
     }
   }
 
-  * getUser () {
+  * authenticateUser () {
     let isValid = yield this.validate()
     if (!isValid) {
       return false
