@@ -33,7 +33,7 @@ class PageantOperation extends Operation {
 
   get messages () {
     return {
-      required_when: `{{field}} is required`,
+      required: `{{field}} is required`,
       integer: '{{field}} is  not  a number',
       date: 'Invalid Date Format '
     }
@@ -89,7 +89,7 @@ class PageantOperation extends Operation {
 
       return pageant
     } catch (error) {
-      this.error.push({code: 500, message: error.message})
+      this.errors.push({code: 500, message: error.message})
       return false
     }
   }
