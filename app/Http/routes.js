@@ -20,7 +20,6 @@ const Route = use('Route')
 Route.on('/').render('welcome')
 // Aut token
 Route.post('/user/auth', 'UserController.index')
-Route.post('/judge', 'JudgeController.index')
 
 Route.group('authenticated', () => {
   Route.get('/user', 'UserController.getUser')

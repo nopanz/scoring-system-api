@@ -20,9 +20,7 @@ class DatabaseSeeder {
 
   * run () {
     // yield Factory.model('App/Model/User').create(5)
-    const role = new Role()
-    role.role = 'administrator'
-    yield role.save()
+    const roles = yield Role.createMany([{role: 'administrator'}, {role: 'judge'}])
 
     const user = yield User.create({
       firstName: 'Rey',
@@ -31,7 +29,9 @@ class DatabaseSeeder {
       password: 'aleonarpogi28'
     })
 
-    yield role.user().save(user)
+    const adminRole = yield Role.query().where({role: 'administrator'}).first()
+
+    yield adminRole.user().save(user)
   }
 
 }

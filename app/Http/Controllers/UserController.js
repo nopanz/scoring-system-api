@@ -25,9 +25,8 @@ class UserController {
   }
 
   * getUser (request, response) {
-    yield request.authUser.related('role').load()
-    const userResponse = new UserResponse(request.authUser.toJSON())
-    response.json(yield userResponse.execute())
+    yield request.auth.user.related('role').load()
+    response.json(request.auth.user)
   }
 }
 

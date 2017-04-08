@@ -16,6 +16,10 @@ class User extends Lucid {
     return 'user_id'
   }
 
+  static get hidden () {
+    return ['password']
+  }
+
   role () {
     return this.belongsTo('App/Model/Role')
   }

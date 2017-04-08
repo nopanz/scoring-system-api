@@ -21,6 +21,7 @@
     "adonis-middleware": "^1.0.8",
     "adonis-validation-provider": "^3.0.5",
     "lodash": "^4.17.4",
+    "pg": "^6.1.5",
     "sqlite3": "^3.1.8",
     "standard": "^8.4.0",
     "youch": "^1.0.1"

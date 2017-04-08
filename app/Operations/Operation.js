@@ -34,7 +34,6 @@ class Operation {
     if (rules) {
       handledRules = Object.assign({}, rules, handledRules)
     }
-
     return handledRules
   }
 
