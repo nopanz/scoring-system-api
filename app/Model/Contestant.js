@@ -16,6 +16,10 @@ class Contestant extends Lucid {
   average () {
     return this.hasMany('App/Model/Average')
   }
+
+  pageant () {
+    return this.belongsTo('App/Model/Pageant')
+  }
 }
 
 module.exports = Contestant

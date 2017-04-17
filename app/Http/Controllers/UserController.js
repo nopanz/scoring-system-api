@@ -1,6 +1,5 @@
 'use strict'
 const UserOperation = use('App/Operations/UserOperation')
-const UserResponse = use('App/Response/UserResponse')
 
 class UserController {
 

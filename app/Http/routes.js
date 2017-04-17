@@ -26,6 +26,10 @@ Route.group('authenticated', () => {
   Route.post('/pageant', 'PageantController.index')
   Route.get('/pageant/:pageantId', 'PageantController.getPageant')
   Route.get('/pageant', 'PageantController.getPageants')
-  Route.post('/judge', 'JudgeController.index')
+  Route.post('/pageant/:pageantId/judge', 'JudgeController.index')
+  Route.get('/pageant/:pageantId/judges', 'JudgeController.getJudges')
+  Route.post('/pageant/:pageantId/contestant', 'ContestantController.index')
+  Route.get('/pageant/:pageantId/contestant', 'ContestantController.getContestants')
+  Route.put('/score/:pageantId/:contestantId', 'ScoreController.index')
 }).middleware('bearer')
 

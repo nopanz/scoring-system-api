@@ -13,7 +13,7 @@ class Score extends Lucid {
     return this.belongsTo('App/Model/Round')
   }
   judge () {
-    return this.belongsTo('App/Model/Judge')
+    return this.belongsTo('App/Model/User')
   }
   contestant () {
     return this.belongsTo('App/Model/Contestant')

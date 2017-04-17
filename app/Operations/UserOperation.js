@@ -5,8 +5,6 @@ const User = use('App/Model/User')
 const Role = use('App/Model/Role')
 const Hash = use('Hash')
 
-const _ = require('lodash')
-
 class UserOperation extends Operation {
   constructor (props) {
     super(props)
@@ -30,7 +28,8 @@ class UserOperation extends Operation {
       [CREATE]: {
         email: 'required|email|unique:user',
         firstName: 'required',
-        lastName: 'required'
+        lastName: 'required',
+        role: 'required'
       }
     }
     return this.setRules(rules, customRules)
@@ -48,10 +47,6 @@ class UserOperation extends Operation {
       DEFAULT: 'auth',
       CREATE: 'create-user'
     }
-  }
-
-  set data (data) {
-    _.merge(this, data)
   }
 
   * authenticateUser () {

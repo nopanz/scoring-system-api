@@ -1,5 +1,6 @@
 const Validator = use('Validator')
 
+const _ = require('lodash')
 /**
  * Operation Base Class
  *
@@ -30,6 +31,12 @@ class Operation {
 
   setRules (rules, customRules) {
     let handledRules = customRules[this.scenario]
+
+    if (!this.scenario) {
+      return {
+        scenario: 'required'
+      }
+    }
 
     if (rules) {
       handledRules = Object.assign({}, rules, handledRules)
@@ -65,6 +72,10 @@ class Operation {
    */
   get error () {
     return this.errors[0]
+  }
+
+  set data (data) {
+    _.merge(this, data)
   }
 }
 

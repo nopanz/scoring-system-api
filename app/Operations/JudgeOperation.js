@@ -3,8 +3,6 @@
 const Operation = use('App/Operations/Operation')
 
 const Judge = use('App/Model/Judge')
-const _ = require('lodash')
-const Hash = use('Hash')
 
 class JudgeOperation extends Operation {
 
@@ -73,36 +71,6 @@ class JudgeOperation extends Operation {
       return judge
     } catch (error) {
       this.errors.push({code: 500, message: error.message})
-      return false
-    }
-  }
-
-  set data (data) {
-    _.merge(this, data)
-  }
-
-  * authorize () {
-    this.scenario = this.scenarios.AUTH
-    let isValid = this.validate()
-    if (!isValid) {
-      return false
-    }
-    try {
-      let judge = yield Judge.query().where({email: this.email}).first()
-      if (!judge) {
-        this.errors.push({code: 401, message: 'Email Not Found'})
-        return false
-      }
-      let judgeHashPass = judge.password
-
-      const verify = yield Hash.verify(this.password, judgeHashPass)
-      if (!verify) {
-        this.errors.push({code: 401, message: 'Invalid Credential'})
-        return false
-      }
-      return judge
-    } catch (error) {
-      this.errors.push({code: 401, message: error.message})
       return false
     }
   }

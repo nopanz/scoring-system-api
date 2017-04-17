@@ -7,9 +7,7 @@ const _ = require('lodash')
 class PageantOperation extends Operation {
   constructor (props) {
     super(props)
-    this.data = {
-      scenario: this.scenarios.DEFAULT
-    }
+    this.scenario = this.scenarios.DEFAULT
     this.pageantId = null
   }
 
@@ -35,7 +33,7 @@ class PageantOperation extends Operation {
     return {
       required: `{{field}} is required`,
       integer: '{{field}} is  not  a number',
-      date: 'Invalid Date Format '
+      date: 'Invalid Date Format'
     }
   }
 
@@ -47,7 +45,7 @@ class PageantOperation extends Operation {
   }
 
   set datas (data) {
-    this.data = data
+    this.params = data
     _.merge(this, data)
   }
 
@@ -58,7 +56,7 @@ class PageantOperation extends Operation {
     }
 
     try {
-      const pageant = yield Pageant.create(this.data)
+      const pageant = yield Pageant.create(this.params)
       return pageant
     } catch (error) {
       this.errors.push({code: 401, message: error.message})
@@ -88,6 +86,29 @@ class PageantOperation extends Operation {
       }
 
       return pageant
+    } catch (error) {
+      this.errors.push({code: 500, message: error.message})
+      return false
+    }
+  }
+
+  * getJudges () {
+    this.scenario = this.scenarios.GET_PAGEANT
+
+    try {
+      let isValid = yield this.validate()
+      if (!isValid) {
+        return false
+      }
+
+      const pageant = yield Pageant.find(this.pageantId)
+      if (!pageant) {
+        this.errors.push({code: 404, message: 'Pageant Not Found'})
+        return false
+      }
+
+      const judges = yield pageant.judges().fetch()
+      return judges
     } catch (error) {
       this.errors.push({code: 500, message: error.message})
       return false

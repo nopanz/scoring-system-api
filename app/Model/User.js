@@ -17,7 +17,7 @@ class User extends Lucid {
   }
 
   static get hidden () {
-    return ['password']
+    return ['password', '_pivot_pageant_id', '_pivot_judge_id']
   }
 
   role () {
@@ -26,6 +26,14 @@ class User extends Lucid {
 
   apiTokens () {
     return this.hasMany('App/Model/Token')
+  }
+
+  pageants () {
+    return this.belongsToMany('App/Model/Pageant', 'pageant_judges', 'judge_id', 'pageant_id')
+  }
+
+  score () {
+    return this.hasMany('App/Model/Score', 'user_id', 'judge_id')
   }
 }
 

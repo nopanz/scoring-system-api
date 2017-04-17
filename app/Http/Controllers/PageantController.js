@@ -14,7 +14,7 @@ class PageantController {
       if (pageant) {
         res.json(pageant)
       } else {
-        res.status(op.error.code).json(op.error.message)
+        res.status(op.error.code).json(op.error)
       }
     } catch (error) {
       res.status(404).json(error.message)

@@ -9,14 +9,15 @@ class Pageant extends Lucid {
   static get primaryKey () {
     return 'pageant_id'
   }
-  judge () {
-    return this.hasMany('App/Model/Judge')
+
+  judges () {
+    return this.belongsToMany('App/Model/User', 'pageant_judges', 'pageant_id', 'judge_id')
   }
   round () {
     return this.hasMany('App/Model/Round')
   }
-  contestant () {
-    return this.hasMany('App/Model/contestant')
+  contestants () {
+    return this.hasMany('App/Model/Contestant')
   }
 }
 
