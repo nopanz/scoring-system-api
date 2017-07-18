@@ -3,6 +3,7 @@
 const Lucid = use('Lucid')
 
 class Score extends Lucid {
+
   static get table () {
     return 'score'
   }

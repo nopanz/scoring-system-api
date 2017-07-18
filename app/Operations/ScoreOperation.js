@@ -5,6 +5,7 @@ const Score = use('App/Model/Score')
 const Contestant = use('App/Model/Contestant')
 const Judge = use('App/Model/User')
 const Pageant = use('App/Model/Pageant')
+const Event = use('Event')
 
 const Database = use('Database')
 
@@ -23,7 +24,7 @@ class ScoreOperation extends Operation {
 
     const customRules = {
       [DEFAULT]: {
-        score: 'required|integer',
+        score: 'required',
         round_number: 'required',
         contestantId: 'required',
         judgeId: 'required',
@@ -86,6 +87,7 @@ class ScoreOperation extends Operation {
       yield judge.score().save(score)
 
       trx.commit()
+      Event.fire('score.added', {pageantId: this.pageantId, round: this.round_number, contestantId: this.contestantId})
       return score
     } catch (error) {
       this.errors.push({code: 500, message: error.message})
